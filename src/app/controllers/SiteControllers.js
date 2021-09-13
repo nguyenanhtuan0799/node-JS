@@ -1,17 +1,15 @@
 const Courses = require('../models/Courses');
-
+const { multiMongoToObj } = require('../../util/mango');
 class SiteControllers {
     //[get] home
-    index(req, res) {
+    index(req, res, next) {
         // res.render('home');
 
-        Courses.find({}, function (err, courses) {
-            if (!err) {
-                res.json(courses);
-            } else {
-                res.status(404).json({ error: 'ERROR!!!' });
-            }
-        });
+        Courses.find({})
+            .then((courses) => {
+                res.render('home', { courses: multiMongoToObj(courses) });
+            })
+            .catch(next);
     }
     //[get] search
     search(req, res) {
