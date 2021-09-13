@@ -1,9 +1,10 @@
-const Courses = require('../models/Courses');
+const courses = require('../models/Courses');
 const { mongoToObj } = require('../../util/mango');
 class coursesControllers {
     //[get] detail
     show(req, res, next) {
-        Courses.findOne({ slug: req.params.slug })
+        courses
+            .findOne({ slug: req.params.slug })
             .then((courses) => {
                 res.render('courses/show', { courses: mongoToObj(courses) });
             })
